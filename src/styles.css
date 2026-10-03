@@ -1,1 +1,11 @@
-/* You can add global styles to this file, and also import other style files */
+@import "tailwindcss";
+
+/* Importar el tema por defecto de Flowbite */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import "flowbite/src/themes/default";
+
+/* Importar el plugin de Flowbite */
+@plugin "flowbite/plugin";
+
+/* Configurar los archivos fuente de Flowbite */
+@source "../node_modules/flowbite";

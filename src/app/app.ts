@@ -1,12 +1,19 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Zodiaco } from './zodiaco/zodiaco';
+import { initFlowbite } from 'flowbite';
+import { RouterOutlet } from '@angular/router'; // <-- 1. Agrega esta importación en la parte superior
 
 @Component({
-  imports: [RouterOutlet],
   selector: 'app-root',
-  styleUrl: './app.css',
+  standalone: true,
+  imports: [Zodiaco, RouterOutlet], // <-- 2. Agrega RouterOutlet dentro de los corchetes de imports
   templateUrl: './app.html',
+  styleUrl: './app.css'
 })
-export class App {
-  protected readonly title = signal('segundoparcialAngular');
+export class App implements OnInit {
+  title = 'segundoparcialAngular';
+
+  ngOnInit(): void {
+    initFlowbite();
+  }
 }

@@ -17,11 +17,18 @@ export const routes: Routes = [
         ]
     },
     {
-  path: 'Escuela',
-  children: [{
-    path: 'lista-alumnos', 
-loadComponent: () => import('./Escuela/lista-alumnos/lista-alumnos').then((c) => c.ListaAlumnos)  }]
-},
+      path: 'Escuela',
+      children: [
+        {
+          path: 'lista-alumnos', 
+          loadComponent: () => import('./Escuela/lista-alumnos/lista-alumnos').then((c) => c.ListaAlumnos)  
+        },
+        {
+          path: 'cinepolis', 
+          loadComponent: () => import('./Escuela/cinepolis/cinepolis').then((c) => c.CinepolisComponent)  
+        }
+      ]
+    },
    
     {
         path:'',redirectTo:'admin',pathMatch:'full'

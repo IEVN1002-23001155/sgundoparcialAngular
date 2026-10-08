@@ -4,7 +4,7 @@
     Lista Alumnos
   </h1>
  
-  <form [formGroup]="contactForm">
+  <form>
  
     <!-- 1. Matrícula -->
     <div class="mb-5">
@@ -14,7 +14,8 @@
       <input
         type="text"
         id="matricula"
-        formControlName="matricula"
+        name="matricula"
+        [(ngModel)]="nuevoAlmuno.matricula"
         required
         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
         placeholder="Ingresa la matrícula"
@@ -29,7 +30,8 @@
       <input
         type="text"
         id="nombre"
-        formControlName="nombre"
+        name="nombre"
+        [(ngModel)]="nuevoAlmuno.nombre"
         required
         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
         placeholder="Ingresa el nombre completo"
@@ -44,7 +46,8 @@
       <input
         type="email"
         id="correo"
-        formControlName="correo"
+        name="correo"
+        [(ngModel)]="nuevoAlmuno.correo"
         required
         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
         placeholder="correo@ejemplo.com"
@@ -59,7 +62,8 @@
       <input
         type="text"
         id="materia"
-        formControlName="materia"
+        name="materia"
+        [(ngModel)]="nuevoAlmuno.materia"
         required
         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
         placeholder="Ingresa la materia"
@@ -69,8 +73,7 @@
     <!-- Botón de Envío -->
     <div class="flex justify-end mt-5">
       <button
-        type="submit"
-        [disabled]="contactForm.invalid"
+        type="submit" (click)="muestraAlumnos()"
         class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 disabled:opacity-50 disabled:cursor-not-allowed"
       >
         Guardar Alumno
@@ -78,5 +81,12 @@
     </div>
  
   </form>
- 
+
+    <h2>Lista alumno</h2>
+    <h2>matricula:{{nuevoAlmuno.matricula}}</h2>
+    <h2>nombre:{{nuevoAlmuno.nombre}}</h2>
+    <h2>correo:{{nuevoAlmuno.correo}}</h2>
+    <h2>materia:{{nuevoAlmuno.materia}}</h2>
+
+
 </div>

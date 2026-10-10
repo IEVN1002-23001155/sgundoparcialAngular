@@ -1,0 +1,99 @@
+<div class="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow">
+  
+  <h1 class="text-3xl font-bold text-gray-900 mb-6">
+    Cinépolis
+  </h1>
+ 
+  <form [formGroup]="cinepolisForm">
+ 
+    <div class="mb-5">
+      <label for="nombre" class="block mb-2 text-sm font-medium text-gray-900">
+        Nombre
+      </label>
+      <input
+        type="text"
+        id="nombre"
+        formControlName="nombre"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+        placeholder="Ingresa tu nombre"
+      >
+    </div>
+
+    <div class="mb-5">
+      <label for="cantidadCompradores" class="block mb-2 text-sm font-medium text-gray-900">
+        Cantidad Compradores
+      </label>
+      <input
+        type="number"
+        id="cantidadCompradores"
+        formControlName="cantidadCompradores"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+      >
+    </div>
+ 
+    <div class="mb-5">
+      <label for="cantidadBoletas" class="block mb-2 text-sm font-medium text-gray-900">
+        Cantidad de Boletas
+      </label>
+      <input
+        type="number"
+        id="cantidadBoletas"
+        formControlName="cantidadBoletas"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+      >
+    </div>
+
+    <div class="mb-5">
+      <label class="block mb-2 text-sm font-medium text-gray-900">
+        ¿Tienes Tarjeta Cineco?
+      </label>
+      <div class="flex gap-4">
+        <label class="flex items-center text-sm font-medium text-gray-900 cursor-pointer">
+          <input type="radio" value="si" formControlName="tarjetaCineco" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
+          <span class="ml-2">Sí</span>
+        </label>
+        <label class="flex items-center text-sm font-medium text-gray-900 cursor-pointer">
+          <input type="radio" value="no" formControlName="tarjetaCineco" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
+          <span class="ml-2">No</span>
+        </label>
+      </div>
+    </div>
+ 
+    <div class="flex justify-end gap-3 mt-5">
+      <button
+        type="button" 
+        (click)="salir()"
+        class="text-gray-900 bg-gray-200 hover:bg-gray-300 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5"
+      >
+        Salir / Limpiar
+      </button>
+      <button
+        type="button" 
+        (click)="procesar()"
+        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5"
+      >
+        Procesar
+      </button>
+    </div>
+ 
+  </form>
+
+  <div class="mt-8 border-t border-gray-200 pt-6">
+    <h2 class="text-xl font-bold text-gray-900 mb-4">Resultados</h2>
+    
+    <div *ngIf="mensajeError" class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 font-medium" role="alert">
+      {{ mensajeError }}
+    </div>
+
+    <div *ngIf="valorAPagar > 0 && !mensajeError" class="space-y-2 text-gray-800 font-medium">
+      <h2>Nombre: {{ cinepolisForm.value.nombre }}</h2>
+      <h2>Compradores: {{ cinepolisForm.value.cantidadCompradores }}</h2>
+      <h2>Boletas a comprar: {{ cinepolisForm.value.cantidadBoletas }}</h2>
+      <h2>Uso de Tarjeta: {{ cinepolisForm.value.tarjetaCineco }}</h2>
+      
+      <!-- Cambio aquí: Agregamos el $ y cambiamos a number -->
+      <h2 class="text-2xl font-bold text-blue-700 mt-4">Total a Pagar: ${{ valorAPagar | number:'1.2-2' }}</h2>
+    </div>
+  </div>
+
+</div>

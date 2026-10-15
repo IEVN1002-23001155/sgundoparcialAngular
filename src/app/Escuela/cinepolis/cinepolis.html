@@ -1,6 +1,6 @@
-<div class="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow">
+<div class="max-w-2xl p-6 mx-auto bg-white rounded-lg shadow">
   
-  <h1 class="text-3xl font-bold text-gray-900 mb-6">
+  <h1 class="mb-6 text-3xl font-bold text-gray-900">
     Cinépolis
   </h1>
  
@@ -60,13 +60,14 @@
     </div>
  
     <div class="flex justify-end gap-3 mt-5">
-      <button
-        type="button" 
-        (click)="salir()"
-        class="text-gray-900 bg-gray-200 hover:bg-gray-300 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5"
+      <!-- Enlace HTML normal que te manda a la otra vista -->
+      <a
+        href="/ver-registros"
+        class="inline-block text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
       >
-        Salir / Limpiar
-      </button>
+        Ver Registros
+      </a>
+      
       <button
         type="button" 
         (click)="procesar()"
@@ -78,21 +79,20 @@
  
   </form>
 
-  <div class="mt-8 border-t border-gray-200 pt-6">
-    <h2 class="text-xl font-bold text-gray-900 mb-4">Resultados</h2>
+  <div class="pt-6 mt-8 border-t border-gray-200">
+    <h2 class="mb-4 text-xl font-bold text-gray-900">Resultados</h2>
     
-    <div *ngIf="mensajeError" class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 font-medium" role="alert">
+    <div *ngIf="mensajeError" class="p-4 mb-4 text-sm font-medium text-red-800 rounded-lg bg-red-50" role="alert">
       {{ mensajeError }}
     </div>
 
-    <div *ngIf="valorAPagar > 0 && !mensajeError" class="space-y-2 text-gray-800 font-medium">
+    <div *ngIf="valorAPagar > 0 && !mensajeError" class="space-y-2 font-medium text-gray-800">
       <h2>Nombre: {{ cinepolisForm.value.nombre }}</h2>
       <h2>Compradores: {{ cinepolisForm.value.cantidadCompradores }}</h2>
       <h2>Boletas a comprar: {{ cinepolisForm.value.cantidadBoletas }}</h2>
       <h2>Uso de Tarjeta: {{ cinepolisForm.value.tarjetaCineco }}</h2>
       
-      <!-- Cambio aquí: Agregamos el $ y cambiamos a number -->
-      <h2 class="text-2xl font-bold text-blue-700 mt-4">Total a Pagar: ${{ valorAPagar | number:'1.2-2' }}</h2>
+      <h2 class="mt-4 text-2xl font-bold text-blue-700">Total a Pagar: ${{ valorAPagar | number:'1.2-2' }}</h2>
     </div>
   </div>
 

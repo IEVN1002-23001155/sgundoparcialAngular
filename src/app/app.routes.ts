@@ -35,5 +35,10 @@ export const routes: Routes = [
     },
     {
         path:'**',redirectTo:'admin'
-    }
+    },
+    {
+    path: 'ver-registros',
+    loadComponent: () => import('./Escuela/ver-registros/ver-registros').then((c) => c.VerRegistrosComponent)
+  }
+    
 ];

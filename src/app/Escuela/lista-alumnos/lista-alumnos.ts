@@ -1,153 +1,118 @@
-/*import { Component, OnInit } from '@angular/core';
-import { IAlumnos } from '../alumnos'; 
-import { FormGroup,FormControl,FormsModule, ReactiveFormsModule } 
-from '@angular/forms';
-import { materialize } from 'rxjs';
-import { core } from '@angular/compiler';
+import { Component } from '@angular/core';
+import { IAlumno } from '../alumnos';
+import { OnInit } from '@angular/core';
+import { FormGroup, FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common'; 
 
 @Component({
-  imports: [FormsModule,ReactiveFormsModule],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule],
   selector: 'app-lista-alumnos',
   styleUrl: './lista-alumnos.css',
   templateUrl: './lista-alumnos.html',
 })
-export class ListaAlumnos implements OnInit {
-  formulario:FormGroup
+export class ListaAlumnos implements OnInit{
+  formulario!:FormGroup
+  alumnos:IAlumno[]=[]
+  indiceEdicion:number=-1
 
-  alumnos: IAlumnos[] = [];
-
-  nuevoAlmuno: IAlumnos = {
-    matricula: '',
-    nombre: '',
-    correo: '',
-    materia: ''
-  };
+  nuevoAlumno:IAlumno={
+    Matricula:'',
+    Nombre:'',
+    Correo:'',
+    Materia:'',
+  }
 
   ngOnInit(): void {
-    this.cargarAlumno();
+    this.cargarAlumnos()
     this.formulario=new FormGroup({
-      matricula: new FormControl(''),
-      nombre:new FormControl(''),
-      correo:new FormControl(''),
-      materia:new FormControl(''),
+      Matricula: new FormControl(''),
+      Nombre: new FormControl(''),
+      Correo: new FormControl(''),
+      Materia: new FormControl(''),
     })
   }
 
-  muestraAlumnos():void{
-    this.nuevoAlmuno.matricula=this.formulario.value.matricula
-    this.nuevoAlmuno.nombre=this.formulario.value.nombre
-    this.nuevoAlmuno.correo=this.formulario.value.correo
-    this.nuevoAlmuno.materia=this.formulario.value.materia
-  }
-
-  cargarAlumno(): void {
-  }
-} */
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
-import { IAlumno } from '../ialumno';
- 
-@Component({
-  selector: 'app-lista-alumnos',
-  imports: [FormsModule, ReactiveFormsModule, CommonModule],
-  templateUrl: './lista-alumnos.html',
-  styleUrl: './lista-alumnos.css'
-})
-export class ListaAlumnos implements OnInit {
-  formulario!: FormGroup;
-  alumnos: IAlumno[] = [];
-  indiceEdicion:number=-1
-  
-  nuevoAlumno: IAlumno = {
-    matricula: '',
-    nombre: '',
-    correo: '',
-    materia: '',
-  };
- 
-  ngOnInit(): void {
-    this.cargarAlumno();
-   
-    this.formulario = new FormGroup({
-      matricula: new FormControl(''),
-      nombre: new FormControl(''),
-      correo: new FormControl(''),
-      materia: new FormControl('')
-    });
-  }
-
-  agregarAlumno(): void{
-    if(
-      this.nuevoAlumno.matricula === '' ||
-      this.nuevoAlumno.nombre === '' ||
-      this.nuevoAlumno.correo === '' ||
-      this.nuevoAlumno.materia === '' 
+  agregarAlumno():void{
+    if (
+      this.nuevoAlumno.Matricula === '' || 
+      this.nuevoAlumno.Nombre === '' ||
+      this.nuevoAlumno.Correo === '' ||
+      this.nuevoAlumno.Materia === ''
     ){
-      alert("Todos los campos son obligatorios");
+      alert('Todos los campos son obligados');
       return;
     }
 
     if(this.indiceEdicion !== -1){
       this.alumnos[this.indiceEdicion]={
-        ...this.nuevoAlumno //split(...) inserta todas las propiedades del objeto
+        ...this.nuevoAlumno
       }
     }else{
-        this.alumnos.push({...this.nuevoAlumno})
+      this.alumnos.push({...this.nuevoAlumno})
     }
 
     localStorage.setItem(
       'alumnos',
-      JSON.stringify(this.alumnos) //
+      JSON.stringify(this.alumnos)
     )
     this.limpiarCampos()
   }
 
   muestraAlumnos():void{
-    this.nuevoAlumno.matricula=this.formulario.value.matricula
-    this.nuevoAlumno.nombre=this.formulario.value.nombre
-    this.nuevoAlumno.correo=this.formulario.value.correo
-    this.nuevoAlumno.materia=this.formulario.value.materia
+    this.nuevoAlumno.Nombre=this.formulario.value.Nombre
+    this.nuevoAlumno.Matricula=this.formulario.value.Matricula
+    this.nuevoAlumno.Correo=this.formulario.value.Correo
+    this.nuevoAlumno.Materia=this.formulario.value.Materia
     this.agregarAlumno()
   }
- 
-  cargarAlumno(): void {
-    const datos = localStorage.getItem('alumnos');
 
-    if(datos){
-      this.alumnos = JSON.parse(datos); //carga los datos en json
+  cargarAlumnos():void{
+    // Se elimina el 'const datos' para cumplir con las reglas
+    if (localStorage.getItem('alumnos')) {
+      // Se agrega el '!' para asegurar que el dato existe
+      this.alumnos = JSON.parse(localStorage.getItem('alumnos')!)
     }
   }
 
-  editarAlumnos(index:number): void{
+  editarAlumnos(index:number):void{
     this.nuevoAlumno={
       ...this.alumnos[index]
     }
-    const alumno = this.alumnos[index]
-    this.formulario.patchValue({//asignar valores a los formularios
-      matricula: alumno.matricula,
-      nombre: alumno.nombre,
-      correo: alumno.correo,
-      materia: alumno.materia,
+    
+    // Se elimina el 'const alumno' y se lee directo del arreglo
+    this.formulario.patchValue({
+      Matricula: this.alumnos[index].Matricula,
+      Nombre: this.alumnos[index].Nombre,
+      Correo: this.alumnos[index].Correo,
+      Materia: this.alumnos[index].Materia
     })
+
     this.indiceEdicion=index
   }
 
-  eliminarAlumnos(index:number): void{
-    this.alumnos.splice(index,1) //recorre o se dezplasa por los elementos de la losta
+  eliminarAlumno(index: number): void{
+    this.alumnos.splice(index,1)
     localStorage.setItem(
-      'alumnos', 
+      'alumnos',
       JSON.stringify(this.alumnos)
     )
   }
 
-  limpiarCampos(): void{
-    this.nuevoAlumno= {
-      matricula: '',
-      nombre: '',
-      correo: '',
-      materia: '',
+  limpiarCampos():void{
+    this.nuevoAlumno = {
+      Matricula: '',
+      Nombre: '',
+      Correo: '',
+      Materia: ''
     }
     this.indiceEdicion=-1
+    
+    // El patchValue ahora está correctamente DENTRO de la función
+    this.formulario.patchValue({
+      Matricula:this.nuevoAlumno.Matricula,
+      Nombre:this.nuevoAlumno.Nombre,
+      Correo:this.nuevoAlumno.Correo,
+      Materia:this.nuevoAlumno.Materia
+    })
   }
 }

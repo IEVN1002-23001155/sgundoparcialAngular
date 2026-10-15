@@ -1,0 +1,70 @@
+<div class="max-w-4xl p-6 mx-auto mt-8">
+  <h1 class="pb-2 mb-6 text-3xl font-bold text-gray-900 border-b">Registros de Cinépolis</h1>
+
+  <!-- TABLA NORMAL -->
+  <div class="relative mb-8 overflow-x-auto shadow-md sm:rounded-lg">
+    <table class="w-full text-sm text-left text-gray-500">
+      <thead class="text-xs text-gray-700 uppercase bg-gray-100">
+        <tr>
+          <th class="px-6 py-3">Nombre</th>
+          <th class="px-6 py-3">Compradores</th>
+          <th class="px-6 py-3">Boletas</th>
+          <th class="px-6 py-3">Tarjeta</th>
+          <th class="px-6 py-3 text-blue-700">Total</th>
+          <th class="px-6 py-3">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let venta of ventas; let i = index" class="bg-white border-b hover:bg-gray-50">
+          <td class="px-6 py-4 text-gray-900">{{ venta.nombre }}</td>
+          <td class="px-6 py-4">{{ venta.cantidadCompradores }}</td>
+          <td class="px-6 py-4">{{ venta.cantidadBoletas }}</td>
+          <td class="px-6 py-4">{{ venta.tarjetaCineco }}</td>
+          
+          <!-- CELDA QUE MUESTRA EL MONTO -->
+          <td class="px-6 py-4 font-bold text-blue-700">${{ venta.totalPagar ? (venta.totalPagar | number:'1.2-2') : '0.00' }}</td>
+          
+          <td class="flex gap-2 px-6 py-4">
+            <button (click)="abrirEdicionVenta(i)" class="px-3 py-2 text-xs font-medium text-center text-white bg-green-600 rounded-lg hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300">Editar</button>
+            <button (click)="eliminarVenta(i)" class="px-3 py-2 text-xs font-medium text-center text-white bg-red-600 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  <div *ngIf="ventas.length === 0" class="p-4 mb-4 text-sm text-gray-800 bg-gray-100 rounded-lg">
+    No hay ventas registradas.
+  </div>
+
+  <!-- FORMULARIO DE EDICIÓN BÁSICO -->
+  <div *ngIf="indiceEdicionCine !== -1" class="p-6 bg-gray-100 border border-gray-300 rounded-lg">
+    <h2 class="mb-4 text-xl font-bold text-gray-900">Editar Venta</h2>
+    
+    <form [formGroup]="formularioCine">
+      <div class="mb-4">
+        <label class="block mb-2 text-sm font-medium text-gray-900">Nombre</label>
+        <input type="text" formControlName="nombre" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5">
+      </div>
+      <div class="mb-4">
+        <label class="block mb-2 text-sm font-medium text-gray-900">Compradores</label>
+        <input type="number" formControlName="cantidadCompradores" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5">
+      </div>
+      <div class="mb-4">
+        <label class="block mb-2 text-sm font-medium text-gray-900">Boletas</label>
+        <input type="number" formControlName="cantidadBoletas" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5">
+      </div>
+      <div class="mb-4">
+        <label class="block mb-2 text-sm font-medium text-gray-900">Tarjeta Cineco</label>
+        <select formControlName="tarjetaCineco" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5">
+          <option value="si">Sí</option>
+          <option value="no">No</option>
+        </select>
+      </div>
+      <div class="flex justify-end gap-2 mt-4">
+        <button type="button" (click)="cerrarEdicionVenta()" class="px-4 py-2 bg-gray-300 rounded-lg">Cancelar</button>
+        <button type="button" (click)="guardarEdicionVenta()" class="px-4 py-2 text-white bg-blue-600 rounded-lg">Guardar</button>
+      </div>
+    </form>
+  </div>
+</div>

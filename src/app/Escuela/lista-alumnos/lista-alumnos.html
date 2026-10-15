@@ -4,9 +4,10 @@
     Lista Alumnos
   </h1>
  
-  <form>
+  <!-- 1. Vinculamos el formulario reactivo -->
+  <form [formGroup]="formulario">
  
-    <!-- 1. Matrícula -->
+    <!-- Matrícula -->
     <div class="mb-5">
       <label for="matricula" class="block mb-2 text-sm font-medium text-gray-900">
         Matrícula
@@ -14,15 +15,13 @@
       <input
         type="text"
         id="matricula"
-        name="matricula"
-        [(ngModel)]="nuevoAlmuno.matricula"
-        required
+        formControlName="Matricula"
         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
         placeholder="Ingresa la matrícula"
       >
     </div>
 
-    <!-- 2. Nombre -->
+    <!-- Nombre -->
     <div class="mb-5">
       <label for="nombre" class="block mb-2 text-sm font-medium text-gray-900">
         Nombre
@@ -30,15 +29,13 @@
       <input
         type="text"
         id="nombre"
-        name="nombre"
-        [(ngModel)]="nuevoAlmuno.nombre"
-        required
+        formControlName="Nombre"
         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
         placeholder="Ingresa el nombre completo"
       >
     </div>
  
-    <!-- 3. Correo -->
+    <!-- Correo -->
     <div class="mb-5">
       <label for="correo" class="block mb-2 text-sm font-medium text-gray-900">
         Correo Electrónico
@@ -46,15 +43,13 @@
       <input
         type="email"
         id="correo"
-        name="correo"
-        [(ngModel)]="nuevoAlmuno.correo"
-        required
+        formControlName="Correo"
         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
         placeholder="correo@ejemplo.com"
       >
     </div>
 
-    <!-- 4. Materia -->
+    <!-- Materia -->
     <div class="mb-5">
       <label for="materia" class="block mb-2 text-sm font-medium text-gray-900">
         Materia
@@ -62,9 +57,7 @@
       <input
         type="text"
         id="materia"
-        name="materia"
-        [(ngModel)]="nuevoAlmuno.materia"
-        required
+        formControlName="Materia"
         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
         placeholder="Ingresa la materia"
       >
@@ -72,9 +65,11 @@
  
     <!-- Botón de Envío -->
     <div class="flex justify-end mt-5">
+      <!-- 2. Llamamos a muestraAlumnos() para extraer la información -->
       <button
-        type="submit" (click)="muestraAlumnos()"
-        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 disabled:opacity-50 disabled:cursor-not-allowed"
+        type="button" 
+        (click)="muestraAlumnos()"
+        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5"
       >
         Guardar Alumno
       </button>
@@ -82,11 +77,80 @@
  
   </form>
 
-    <h2>Lista alumno</h2>
-    <h2>matricula:{{nuevoAlmuno.matricula}}</h2>
-    <h2>nombre:{{nuevoAlmuno.nombre}}</h2>
-    <h2>correo:{{nuevoAlmuno.correo}}</h2>
-    <h2>materia:{{nuevoAlmuno.materia}}</h2>
+  <!-- Vista previa dinámica -->
+  <div class="mt-4">
+    <h2 class="font-bold">Vista previa:</h2>
+    <h2>Matrícula: {{ formulario.value.Matricula }}</h2>
+    <h2>Nombre: {{ formulario.value.Nombre }}</h2>
+    <h2>Correo: {{ formulario.value.Correo }}</h2>
+    <h2>Materia: {{ formulario.value.Materia }}</h2>
+  </div>
 
+</div>
 
+<!-- Tabla -->
+<div class="max-w-6xl mx-auto mt-8">
+ 
+  <h2 class="mb-4 text-2xl font-bold text-gray-900">
+    Lista de alumnos
+  </h2>
+  <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+ 
+    <table class="w-full text-sm text-left text-gray-500">
+ 
+      <thead class="text-xs text-gray-700 uppercase bg-gray-100">
+        <tr>
+          <th scope="col" class="px-6 py-3">Matrícula</th>
+          <th scope="col" class="px-6 py-3">Nombre</th>
+          <th scope="col" class="px-6 py-3">Correo</th>
+          <th scope="col" class="px-6 py-3">Materia</th>
+          <th scope="col" class="px-6 py-3">Acciones</th>
+        </tr>
+      </thead>
+ 
+      <tbody>
+        <!-- 3. Iteramos y respetamos las mayúsculas de tu Interfaz -->
+        <tr *ngFor="let alumno1 of alumnos; let i = index" class="bg-white border-b border-gray-200 hover:bg-gray-50">
+          <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+            {{ alumno1.Matricula }}
+          </td>
+          <td class="px-6 py-4">
+            {{ alumno1.Nombre }}
+          </td>
+          <td class="px-6 py-4">
+            {{ alumno1.Correo }}
+          </td>
+          <td class="px-6 py-4">
+            {{ alumno1.Materia }}
+          </td>
+          <td class="px-6 py-4">
+            <div class="flex gap-2">
+              <button
+                type="button"
+                class="px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-lg hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300"
+                (click)="editarAlumnos(i)"
+              >
+                Editar
+              </button>
+              <button
+                type="button"
+                class="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-lg hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300"
+                (click)="eliminarAlumno(i)"
+              >
+                Eliminar
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+ 
+    </table>
+ 
+  </div>
+ 
+   <div *ngIf="alumnos.length === 0" class="p-4 mt-4 text-sm text-gray-800 bg-gray-100 rounded-lg" role="alert">
+    <span class="font-medium">Información:</span>
+    No hay alumnos registrados.
+  </div>
+ 
 </div>
